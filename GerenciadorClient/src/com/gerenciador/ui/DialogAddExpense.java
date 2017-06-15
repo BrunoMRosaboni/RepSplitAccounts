@@ -31,8 +31,8 @@ public class DialogAddExpense extends Dialog {
 	
 	
 
-	public DialogAddExpense(Shell parent, ArrayList<User> users, int style) {
-		super(parent, style);
+	public DialogAddExpense(Shell parent, ArrayList<User> users) {
+		super(parent, SWT.DIALOG_TRIM|SWT.MODELESS);
 		this.users = users;
 	}
 
@@ -71,7 +71,7 @@ public class DialogAddExpense extends Dialog {
 	 * Create contents of the dialog.
 	 */
 	private void createContents() {
-		shlAddNewExpense = new Shell(getParent(), getStyle());
+		shlAddNewExpense = new Shell(getParent(), SWT.DIALOG_TRIM);
 		shlAddNewExpense.setSize(390, 400);
 		shlAddNewExpense.setText("Adicionar novo pagamento");
 		
@@ -79,14 +79,14 @@ public class DialogAddExpense extends Dialog {
 		lblQuemPagou.setBounds(20, 10, 85, 15);
 		lblQuemPagou.setText("Quem Pagou?");
 		
-		List listPayers = new List(shlAddNewExpense, SWT.BORDER | SWT.MULTI);
+		List listPayers = new List(shlAddNewExpense, SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL | SWT.MULTI);
 		listPayers.setBounds(20, 31, 140, 140);
 		
 		Label lblPraQuem = new Label(shlAddNewExpense, SWT.NONE);
 		lblPraQuem.setBounds(220, 10, 65, 15);
 		lblPraQuem.setText("Pra quem?");
 		
-		List listReceivers = new List(shlAddNewExpense, SWT.BORDER | SWT.MULTI);
+		List listReceivers = new List(shlAddNewExpense, SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL | SWT.MULTI);
 		listReceivers.setBounds(220, 31, 140, 140);
 		
 		Label lblQuanto = new Label(shlAddNewExpense, SWT.NONE);

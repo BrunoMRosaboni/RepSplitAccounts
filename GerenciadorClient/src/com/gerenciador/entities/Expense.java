@@ -54,6 +54,7 @@ public class Expense {
 			else
 				s+=", "+ user.getName();
 		}
+		s+=" Motivo: "+this.getReason();
 		return s;
 	}
 

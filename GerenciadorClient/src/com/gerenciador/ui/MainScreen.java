@@ -112,15 +112,19 @@ public class MainScreen {
 		groups.add(g1);
 	}
 	
-	public void updateTabs(Group grSelected, List listUsers, List listBalance, List listGroups){
+	public void updateTabs(Group grSelected, List listUsers, List listBalance, List listPayments, List listDebits, List listGroups){
 		
 		if(listGroups.getSelectionIndex()>=0){
+			//GroupTitle update
 			grSelected.setText(groups.get(listGroups.getSelectionIndex()).getName());
+			
+			//users tab update
 			listUsers.removeAll();
 			for (User u : groups.get(listGroups.getSelectionIndex()).getUsers()) {
 				listUsers.add(u.getName());
 			}
 			
+			//balances tab update
 			listBalance.removeAll();
 			HashMap<String, Double> balance = groups.get(listGroups.getSelectionIndex()).getBalances();
 			
@@ -128,6 +132,17 @@ public class MainScreen {
 				listBalance.add(name+": R$ "+String.format("%.2f",balance.get(name)));
 			}
 			
+			//payments tab update
+			listPayments.removeAll();
+			for (Expense e : groups.get(listGroups.getSelectionIndex()).getExpenses()) {
+				listPayments.add(e.toString());
+			}
+			
+			//debits tab update
+			listDebits.removeAll();
+			for (String s : groups.get(listGroups.getSelectionIndex()).getDebits()) {
+				listDebits.add(s);
+			}
 		}
 		
 	}
@@ -151,70 +166,60 @@ public class MainScreen {
 		grAllGroups.setText("Seus Grupos");
 		grAllGroups.setBounds(10, 34, 153, 141);
 		
-		List listGroups = new List(grAllGroups, SWT.BORDER);
+		List listGroups = new List(grAllGroups, SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
 		listGroups.setItems(new String[] {});
 		listGroups.setBounds(10, 20, 133, 111);
 		
 		Group grSelected = new Group(shell, SWT.NONE);
-		grSelected.setText(groups.get(0).getName());
-		grSelected.setBounds(195, 34, 430, 306);
+		grSelected.setBounds(195, 34, 462, 306);
 		
 		TabFolder tabFolder = new TabFolder(grSelected, SWT.NONE);
-		tabFolder.setBounds(10, 23, 410, 273);
+		tabFolder.setBounds(10, 23, 442, 273);
 		
 		TabItem tabPayments = new TabItem(tabFolder, SWT.NONE);
 		tabPayments.setText("Pagamentos");
 		
-		List listPayments = new List(tabFolder, SWT.BORDER);
+		List listPayments = new List(tabFolder, SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
 		tabPayments.setControl(listPayments);
 		
 		TabItem tabDebits = new TabItem(tabFolder, SWT.NONE);
 		tabDebits.setText("D\u00E9bitos");
 		
-		List listDebits = new List(tabFolder, SWT.BORDER);
+		List listDebits = new List(tabFolder, SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
 		tabDebits.setControl(listDebits);
 		
 		TabItem tabUsers = new TabItem(tabFolder, SWT.NONE);
 		tabUsers.setText("Usu\u00E1rios");
 		
-		List listUsers = new List(tabFolder, SWT.BORDER);
+		List listUsers = new List(tabFolder, SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
 		tabUsers.setControl(listUsers);
 		
 		TabItem tabBalance = new TabItem(tabFolder, SWT.NONE);
 		tabBalance.setText("Balan\u00E7o Geral");
 		
-		List listBalance = new List(tabFolder, SWT.BORDER);
+		List listBalance = new List(tabFolder, SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
 		tabBalance.setControl(listBalance);
 		
 		Button btnAddDebt = new Button(shell, SWT.NONE);
-		btnAddDebt.setBounds(480, 370, 145, 25);
+		btnAddDebt.setBounds(512, 370, 145, 25);
 		btnAddDebt.setText("Adiconar Pagamento");
 		
-		Button btnAdicionarUsurio = new Button(shell, SWT.NONE);
-		btnAdicionarUsurio.setBounds(329, 370, 145, 25);
-		btnAdicionarUsurio.setText("Adicionar Usu\u00E1rio");
+		Button btnAddUser = new Button(shell, SWT.NONE);
+		btnAddUser.setBounds(210, 370, 145, 25);
+		btnAddUser.setText("Criar Usu\u00E1rio");
+		
+		Button btnNewGroup = new Button(shell, SWT.NONE);
+		btnNewGroup.setBounds(361, 370, 145, 25);
+		btnNewGroup.setText("Novo Grupo");
 		
 		//initializations
-		
-		for (Expense e : groups.get(0).getExpenses()) {
-			listPayments.add(e.toString());
-		}
-		
-		for (User u : groups.get(0).getUsers()) {
-			listUsers.add(u.getName());
-		}
-		
+		//groups list
 		for (FinGroup g : groups) {
 			listGroups.add(g.getName());
 		}
 		listGroups.setSelection(0);
 		
-		HashMap<String, Double> balance = groups.get(0).getBalances();
-		
-		for (String name : balance.keySet()) {
-			listBalance.add(name+": R$ "+String.format("%.2f",balance.get(name)));
-		}
-		
+		updateTabs(grSelected, listUsers, listBalance, listPayments, listDebits, listGroups);
 		
 		//listeners
 		listGroups.addSelectionListener(new SelectionListener() {
@@ -223,7 +228,7 @@ public class MainScreen {
 					public void widgetSelected(SelectionEvent e) {
 						// TODO Auto-generated method stub
 						//updates the views on the tabs as another group is selected
-						updateTabs(grSelected, listUsers, listBalance, listGroups);
+						updateTabs(grSelected, listUsers, listBalance,listPayments, listDebits, listGroups);
 					}
 					
 					@Override
@@ -238,14 +243,49 @@ public class MainScreen {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				// TODO Auto-generated method stub
-				DialogAddExpense dialog = new DialogAddExpense(shell, groups.get(listGroups.getSelectionIndex()).getUsers(), SWT.APPLICATION_MODAL);
+				DialogAddExpense dialog = new DialogAddExpense(shell, groups.get(listGroups.getSelectionIndex()).getUsers());
 				Expense expense = dialog.open();
 				//if a expense was added, update the view and the group
 				if(expense!=null){
 					groups.get(listGroups.getSelectionIndex()).getExpenses().add(expense);
-					updateTabs(grSelected, listUsers, listBalance, listGroups);
+					updateTabs(grSelected, listUsers, listBalance,listPayments, listDebits, listGroups);
 				}
 					
+			}
+			
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+		
+		btnAddUser.addSelectionListener(new SelectionListener() {
+			
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+				DialogCreateUser dialog = new DialogCreateUser(shell);
+				User u = dialog.open();
+				if(u!=null){
+					groups.get(listGroups.getSelectionIndex()).getUsers().add(u);
+					updateTabs(grSelected, listUsers, listBalance, listPayments, listDebits, listGroups);
+				}
+			}
+			
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+		
+		btnNewGroup.addSelectionListener(new SelectionListener() {
+			
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+				
 			}
 			
 			@Override
