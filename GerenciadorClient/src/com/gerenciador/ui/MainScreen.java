@@ -33,6 +33,10 @@ import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeItem;
 import org.eclipse.jface.viewers.ListViewer;
 
+/**
+ * Class to create the main screen of the app.
+ */
+
 public class MainScreen {
 
 	protected Shell shell;
@@ -94,7 +98,7 @@ public class MainScreen {
 		receivers1.add(u3);
 		receivers1.add(u4);
 		
-		Expense ex1 = new Expense(payers1, receivers1, 15.0, "Almoço");
+		Expense ex1 = new Expense(payers1, receivers1, 15.0, "Almoï¿½o");
 		expenses.add(ex1);
 		
 		Expense ex = new Expense(payers, receivers, 15.0, "Breja");

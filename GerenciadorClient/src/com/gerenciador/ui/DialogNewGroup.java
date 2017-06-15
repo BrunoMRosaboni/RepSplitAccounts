@@ -8,6 +8,10 @@ import org.eclipse.swt.widgets.Shell;
 import com.gerenciador.entities.FinGroup;
 import com.gerenciador.entities.User;
 
+/**
+ * Class to create the dialog for the user add a new group.
+ */
+
 public class DialogNewGroup extends Dialog {
 
 	protected FinGroup result;

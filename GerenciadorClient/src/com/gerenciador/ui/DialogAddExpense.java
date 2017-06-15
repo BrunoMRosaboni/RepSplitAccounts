@@ -20,6 +20,10 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.Text;
 
+/**
+ * Class to create the dialog for the user add an expense.
+ */
+
 public class DialogAddExpense extends Dialog {
 
 	protected Expense result;
@@ -29,7 +33,11 @@ public class DialogAddExpense extends Dialog {
 	private Text textAmount;
 	private Text textReason;
 	
-	
+	/**
+	 * Constructor.
+	 * @param parent The shell parent of this dialog.
+	 * @param users A list of the users of the selected group.
+	 */
 
 	public DialogAddExpense(Shell parent, ArrayList<User> users) {
 		super(parent, SWT.DIALOG_TRIM|SWT.MODELESS);

@@ -12,6 +12,10 @@ import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.Button;
 
+/**
+ * Class to create the dialog for the user add a new user.
+ */
+
 public class DialogCreateUser extends Dialog {
 
 	protected User result;
@@ -27,7 +31,7 @@ public class DialogCreateUser extends Dialog {
 	 */
 	public DialogCreateUser(Shell parent) {
 		super(parent, SWT.DIALOG_TRIM|SWT.MODELESS);
-		setText("Criar Novo Usuário");
+		setText("Criar Novo Usuï¿½rio");
 	}
 	
 

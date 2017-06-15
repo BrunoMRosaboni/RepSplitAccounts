@@ -1,6 +1,11 @@
 package com.gerenciador.entities;
 
 import java.util.ArrayList;
+
+/**
+ * Object to represent a group in wich the users will share and control expenses.
+ */
+
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -11,20 +16,42 @@ public class FinGroup {
 	private ArrayList<Expense> expenses;
 	private String name;
 	
+	/**
+	 * Constructor.
+	 * @param users A list representing the users of the group.
+	 * @param expenses A list representing the expenses of the group.
+	 * @param name The name of the group.
+	 */
+	
 	public FinGroup(ArrayList<User> users, ArrayList<Expense> expenses, String name) {
 		super();
 		this.users = users;
 		this.expenses = expenses;
 		this.name = name;
 	}
+	
+	/**
+	 * The getter of 'users'.
+	 * @return The users of this group.
+	 */
 
 	public ArrayList<User> getUsers() {
 		return users;
 	}
+	
+	/**
+	 * The getter of 'expenses'.
+	 * @return The expenses of this group.
+	 */
 
 	public ArrayList<Expense> getExpenses() {
 		return expenses;
 	}
+	
+	/**
+	 * The getter of 'name'.
+	 * @return name The name of the group.
+	 */
 
 	public String getName() {
 		return name;
@@ -56,6 +83,11 @@ public class FinGroup {
 		
 		return balances;
 	}
+	
+	/**
+	 * Function that calculates wich user shold pay to wich user to bring the balance of each one back to zero.
+	 * @return A list with strings like this "'who should pay' -> 'to whom'('how much')"
+	 */
 	
 	public ArrayList<String> getDebits(){
 		

@@ -17,6 +17,10 @@ import org.eclipse.swt.widgets.Button;
 import swing2swt.layout.BoxLayout;
 import org.eclipse.swt.layout.RowLayout;
 
+/**
+ * Class to create the dialog for the login of the user.
+ */
+
 public class Login {
 
 	protected Shell shlGerenciadorFinanceiro;
